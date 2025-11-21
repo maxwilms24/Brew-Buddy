@@ -1,0 +1,5 @@
+{
+  "name": "Brew Buddy",
+  "description": "Een slim dashboard voor een studentenhuis koelkast met RFID en gewichtsensoren.",
+  "requestFramePermissions": []
+}
