@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Search, Plus, ChevronDown } from 'lucide-react';
+import { Search, ChevronDown } from 'lucide-react';
 import { Transaction } from '../types';
 
 interface TransactionHistoryProps {
   transactions: Transaction[];
-  onAddStock: () => void;
 }
 
-const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions, onAddStock }) => {
+const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<'ALL' | 'CONSUMPTION' | 'RESTOCK'>('ALL');
 
@@ -33,13 +32,6 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions, o
                 <h2 className="text-3xl font-bold text-slate-900">Transactie Geschiedenis</h2>
                 <p className="text-slate-500 mt-1">Een overzicht van alle mutaties in de koelkast.</p>
             </div>
-            <button
-                onClick={onAddStock}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold flex items-center gap-2 transition-colors shadow-sm active:scale-95"
-            >
-                <Plus className="w-5 h-5" />
-                Nieuwe Voorraad
-            </button>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">

@@ -82,7 +82,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onConfirm 
           <button
             onClick={handleSubmit}
             disabled={!name || !rfid}
-            className="flex-1 px-4 py-3 bg-slate-900 text-white rounded-xl font-semibold hover:bg-slate-800 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Toevoegen
           </button>

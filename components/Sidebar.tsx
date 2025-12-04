@@ -1,13 +1,15 @@
 import React from 'react';
-import { LayoutDashboard, Receipt, Users, Beer } from 'lucide-react';
+import { LayoutDashboard, Receipt, Users, Beer, Database, Zap } from 'lucide-react';
 import { ViewState } from '../types';
 
 interface SidebarProps {
   currentView: ViewState;
   setView: (view: ViewState) => void;
+  isMockMode: boolean;
+  setIsMockMode: (value: boolean) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isMockMode, setIsMockMode }) => {
   const navItems = [
     { id: 'DASHBOARD', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'TRANSACTIONS', label: 'Transacties', icon: Receipt },
@@ -23,7 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
         <h1 className="text-xl font-bold text-slate-900">Brew Buddy</h1>
       </div>
 
-      <nav className="space-y-2">
+      <nav className="space-y-2 flex-1">
         {navItems.map((item) => (
           <button
             key={item.id}
@@ -39,6 +41,37 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
           </button>
         ))}
       </nav>
+
+      {/* Mock Mode Toggle */}
+      <div className="pt-6 border-t border-slate-100">
+        <div className="flex items-center justify-between px-2 mb-2">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                Data Bron
+            </span>
+        </div>
+        <label className="flex items-center cursor-pointer relative group p-2 rounded-lg hover:bg-slate-50 transition-colors">
+            <input 
+                type="checkbox" 
+                className="sr-only peer" 
+                checked={isMockMode}
+                onChange={(e) => setIsMockMode(e.target.checked)}
+            />
+            <div className={`w-9 h-5 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer relative peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all ${isMockMode ? 'peer-checked:bg-blue-600' : ''}`}></div>
+            <span className="ml-3 text-sm font-medium text-slate-700 flex items-center gap-2">
+                {isMockMode ? (
+                    <>
+                        <Zap className="w-4 h-4 text-orange-500" />
+                        Demo Modus
+                    </>
+                ) : (
+                    <>
+                        <Database className="w-4 h-4 text-slate-400" />
+                        Live Database
+                    </>
+                )}
+            </span>
+        </label>
+      </div>
     </div>
   );
 };

@@ -10,8 +10,10 @@ interface ActivityFeedProps {
 const ActivityFeed: React.FC<ActivityFeedProps> = ({ transactions, onViewAll }) => {
   return (
     <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full justify-between">
+      <h3 className="text-xl font-bold text-slate-900 mb-2">Recente Transacties</h3>
+      
       <div className="flex-1 overflow-hidden">
-        <ul className="space-y-6 text-slate-600 mt-4">
+        <ul className="space-y-6 text-slate-600 mt-2">
           {transactions.slice(0, 5).map((t) => (
             <li key={t.id} className="flex items-start gap-3 text-lg">
               <span className="text-slate-400 mt-2">•</span>
@@ -31,7 +33,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ transactions, onViewAll }) 
       <div className="mt-6 pt-4">
         <button 
           onClick={onViewAll}
-          className="w-full bg-slate-800 hover:bg-slate-700 text-white px-4 py-3 rounded-md font-medium transition-all flex items-center justify-center gap-2"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-md font-medium transition-all flex items-center justify-center gap-2 shadow-sm shadow-blue-200"
         >
           Bekijk alle transacties
           <ArrowRight className="w-4 h-4" />
