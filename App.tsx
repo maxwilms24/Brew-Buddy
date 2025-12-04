@@ -9,14 +9,15 @@ import UserManagement from './components/UserManagement';
 import AddUserModal from './components/AddUserModal';
 import { ViewState, StockItem, Transaction, User } from './types';
 import { INITIAL_STOCK, WEEKLY_DATA } from './constants';
-import { Menu, WifiOff, Zap } from 'lucide-react';
+import { Menu, Zap } from 'lucide-react';
 import { api } from './services/api';
 
 function App() {
   const [view, setView] = useState<ViewState>('DASHBOARD');
   
   // State for switching between Mock Data and Live API
-  const [isMockMode, setIsMockMode] = useState(false);
+  // Hardcoded to true as per request: "Demo mode always on without toggle"
+  const [isMockMode] = useState(true);
 
   // State initialization with empty/default values
   const [stock, setStock] = useState<StockItem>(INITIAL_STOCK);
@@ -47,7 +48,7 @@ function App() {
     }
   };
 
-  // Reload data when isMockMode changes
+  // Reload data when isMockMode changes (or on mount)
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,16 +57,13 @@ function App() {
   // Polling (Refresh every 5 seconds)
   useEffect(() => {
     const intervalId = setInterval(() => {
-      // Only refresh automatically if we are NOT in mock mode
-      // Or if you want mock mode to refresh too (usually not needed unless simulating real-time)
-      if (!isMockMode) {
-          loadData();
-      }
+      // Refresh automatically even in mock mode to simulate life
+      loadData();
     }, 5000);
 
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMockMode]); // Re-create interval if mode changes
+  }, [isMockMode]);
 
   const handleAddUser = async (name: string, rfid: string) => {
     // Call API with current mode
@@ -132,23 +130,13 @@ function App() {
       <Sidebar 
         currentView={view} 
         setView={setView} 
-        isMockMode={isMockMode}
-        setIsMockMode={setIsMockMode}
       />
       
       {/* Banner for Mock Mode */}
       {isMockMode && (
         <div className="bg-blue-600 text-white px-4 py-2 text-center text-sm font-medium flex items-center justify-center gap-2 md:ml-64">
            <Zap className="w-4 h-4 text-yellow-300" />
-           Je bekijkt nu demo data. Wijzigingen worden niet opgeslagen in de database.
-        </div>
-      )}
-
-      {/* Connection Error Banner (Only show if NOT in mock mode) */}
-      {connectionError && !isMockMode && (
-        <div className="bg-red-500 text-white px-4 py-2 text-center text-sm font-medium flex items-center justify-center gap-2 md:ml-64">
-           <WifiOff className="w-4 h-4" />
-           Geen verbinding met backend database.
+           Demo Modus Actief
         </div>
       )}
 
@@ -170,18 +158,6 @@ function App() {
                     <button onClick={() => {setView('DASHBOARD'); setIsMobileMenuOpen(false)}} className="block w-full text-left px-4 py-2 font-medium">Dashboard</button>
                     <button onClick={() => {setView('TRANSACTIONS'); setIsMobileMenuOpen(false)}} className="block w-full text-left px-4 py-2 font-medium">Transacties</button>
                     <button onClick={() => {setView('USERS'); setIsMobileMenuOpen(false)}} className="block w-full text-left px-4 py-2 font-medium">Gebruikers</button>
-                    
-                    <div className="border-t border-slate-100 pt-4 mt-4">
-                        <label className="flex items-center gap-3 px-4 py-2">
-                            <input 
-                                type="checkbox" 
-                                checked={isMockMode}
-                                onChange={(e) => setIsMockMode(e.target.checked)}
-                                className="w-4 h-4"
-                            />
-                            <span className="text-sm font-medium">Demo Modus</span>
-                        </label>
-                    </div>
                  </nav>
               </div>
           </div>

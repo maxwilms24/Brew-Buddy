@@ -25,7 +25,7 @@ const StockCard: React.FC<StockCardProps> = ({ stock }) => {
       <div className="flex flex-col items-center">
         <div className="mb-6 relative">
             <svg 
-                className="w-32 h-32 drop-shadow-sm" 
+                className={`w-32 h-32 drop-shadow-sm ${isLowStock ? 'animate-bounce' : ''}`} 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
